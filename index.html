@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>情暖桑榆 - 社区互助养老助行服务计划</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#B95C50',
+            secondary: '#E8B4B8',
+            accent: '#F6CDCD',
+            base: '#FFFBF7',
+            dark: '#1A1A23',
+            gray: '#9CA3AF',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .glass {
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+      }
+      .glass-dark {
+        background: rgba(26, 26, 35, 0.7);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .text-gradient {
+        background: linear-gradient(90deg, #B95C50, #E8B4B8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .card {
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 24px 48px -12px rgba(185, 92, 80, 0.15);
+      }
+      .animate-fade { animation: fade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+      .animate-up { animation: up 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+      .animate-scale { animation: scale 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+      .animate-stagger { opacity:0; animation:stagger 0.4s ease forwards; }
+      @keyframes fade { from { opacity:0; } to { opacity:1; } }
+      @keyframes up { from { opacity:0; transform:translateY(40px); } to { opacity:1; transform:translateY(0); } }
+      @keyframes scale { from { opacity:0; transform:scale(0.88); } to { opacity:1; transform:scale(1); } }
+      @keyframes stagger { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+      .scrollbar-hide::-webkit-scrollbar { display:none; }
+      .scrollbar-hide { -ms-overflow-style:none; scrollbar-width:none; }
+      .shadow-premium { box-shadow: 0 8px 30px rgba(0,0,0,0.08); }
+      .gradient-bg { background: linear-gradient(135deg, #FFFBF7 0%, #FDF6F3 100%); }
+      .input-style {
+        @apply w-full px-4 py-3 rounded-xl bg-white/70 border border-gray/20 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all;
+      }
+      
+      /* 新增动画和特效 */
+      .float-animation { animation: float 6s ease-in-out infinite; }
+      .pulse-animation { animation: pulse 3s ease-in-out infinite; }
+      .glow-animation { animation: glow 3s ease-in-out infinite; }
+      .shimmer-text { 
+        background: linear-gradient(90deg, #B95C50, #E8B4B8, #F6CDCD, #B95C50);
+        background-size: 300% 100%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: shimmer 8s ease-in-out infinite;
+      }
+      .parallax-bg { transform: translateY(calc(var(--scroll) * 0.5)); }
+      
+      @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-12px); }
+      }
+      
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.8; }
+      }
+      
+      @keyframes glow {
+        0%, 100% { box-shadow: 0 0 20px rgba(185, 92, 80, 0.4); }
+        50% { box-shadow: 0 0 35px rgba(185, 92, 80, 0.7); }
+      }
+      
+      @keyframes shimmer {
+        0% { background-position: -200% center; }
+        100% { background-position: 200% center; }
+      }
+      
+      @keyframes slideInRight {
+        from { opacity: 0; transform: translateX(30px); }
+        to { opacity: 1; transform: translateX(0); }
+      }
+      
+      @keyframes slideInLeft {
+        from { opacity: 0; transform: translateX(-30px); }
+        to { opacity: 1; transform: translateX(0); }
+      }
+      
+      .slide-in-right { animation: slideInRight 0.8s ease-out forwards; }
+      .slide-in-left { animation: slideInLeft 0.8s ease-out forwards; }
+      
+      .hover-lift { transition: all 0.3s ease; }
+      .hover-lift:hover { transform: translateY(-5px); }
+      
+      .gradient-border {
+        position: relative;
+        border-radius: 1.5rem;
+        overflow: hidden;
+      }
+      
+      .gradient-border::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 1.5rem;
+        padding: 2px;
+        background: linear-gradient(45deg, #B95C50, #E8B4B8, #F6CDCD);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+      }
+      
+      .gradient-border:hover::before {
+        opacity: 1;
+      }
+      
+      .particle {
+        position: absolute;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 1;
+      }
+      
+      .ripple {
+        position: absolute;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(185, 92, 80, 0.2) 0%, rgba(185, 92, 80, 0) 70%);
+        transform: scale(0);
+        animation: ripple 0.6s linear;
+      }
+      
+      @keyframes ripple {
+        to { transform: scale(4); opacity: 0; }
+      }
+      
+      .nav-link {
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, #B95C50, #E8B4B8);
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+      }
+      
+      .nav-link:hover::after {
+        transform: translateX(0);
+      }
+      
+      .scroll-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #B95C50, #E8B4B8);
+        z-index: 9999;
+        transition: width 0.1s ease;
+      }
+    }
+  </style>
+</head>
+<body class="bg-base text-dark antialiased scroll-smooth scrollbar-hide overflow-x-hidden">
+
+<!-- 滚动进度条 -->
+<div id="scrollProgress" class="scroll-progress"></div>
+
+<!-- 导航 -->
+<header id="navbar" class="fixed w-full top-0 z-50 transition-all duration-500">
+  <div class="glass mx-4 mt-3 rounded-2xl px-5 py-2 shadow-lg">
+    <div class="flex justify-between items-center h-14">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center glow-animation">
+          <i class="fa fa-heart-o text-primary text-lg"></i>
+        </div>
+        <span class="text-lg font-bold tracking-tight shimmer-text">情暖桑榆</span>
+      </div>
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+        <a href="#home" class="nav-link text-dark/80 hover:text-primary transition-colors duration-300">首页</a>
+        <a href="#about" class="nav-link text-dark/80 hover:text-primary transition-colors duration-300">项目概况</a>
+        <a href="#service" class="nav-link text-dark/80 hover:text-primary transition-colors duration-300">服务体系</a>
+        <a href="#operation" class="nav-link text-dark/80 hover:text-primary transition-colors duration-300">运营模式</a>
+        <a href="#innovation" class="nav-link text-dark/80 hover:text-primary transition-colors duration-300">创新亮点</a>
+        <a href="#team" class="nav-link text-dark/80 hover:text-primary transition-colors duration-300">核心团队</a>
+        <a href="#join" class="nav-link text-dark/80 hover:text-primary transition-colors duration-300">招募工作者</a>
+        <a href="#message" class="nav-link text-dark/80 hover:text-primary transition-colors duration-300">留言咨询</a>
+        <a href="#value" class="nav-link text-dark/80 hover:text-primary transition-colors duration-300">社会价值</a>
+      </nav>
+      <button id="menuBtn" class="md:hidden w-10 h-10 rounded-xl bg-dark/5 flex items-center justify-center text-dark hover:bg-primary/10 transition-colors">
+        <i class="fa fa-bars"></i>
+      </button>
+    </div>
+  </div>
+  <div id="mobileMenu" class="hidden md:hidden absolute top-20 left-0 right-0 mx-4 glass rounded-2xl p-4 animate-fade shadow-xl">
+    <div class="flex flex-col gap-2 text-sm font-medium">
+      <a href="#home" class="py-3 px-4 rounded-lg hover:bg-primary/10 text-dark/80 hover:text-primary transition-all hover:translate-x-2">首页</a>
+      <a href="#about" class="py-3 px-4 rounded-lg hover:bg-primary/10 text-dark/80 hover:text-primary transition-all hover:translate-x-2">项目概况</a>
+      <a href="#service" class="py-3 px-4 rounded-lg hover:bg-primary/10 text-dark/80 hover:text-primary transition-all hover:translate-x-2">服务体系</a>
+      <a href="#operation" class="py-3 px-4 rounded-lg hover:bg-primary/10 text-dark/80 hover:text-primary transition-all hover:translate-x-2">运营模式</a>
+      <a href="#innovation" class="py-3 px-4 rounded-lg hover:bg-primary/10 text-dark/80 hover:text-primary transition-all hover:translate-x-2">创新亮点</a>
+      <a href="#team" class="py-3 px-4 rounded-lg hover:bg-primary/10 text-dark/80 hover:text-primary transition-all hover:translate-x-2">核心团队</a>
+      <a href="#join" class="py-3 px-4 rounded-lg hover:bg-primary/10 text-dark/80 hover:text-primary transition-all hover:translate-x-2">招募工作者</a>
+      <a href="#message" class="py-3 px-4 rounded-lg hover:bg-primary/10 text-dark/80 hover:text-primary transition-all hover:translate-x-2">留言咨询</a>
+      <a href="#value" class="py-3 px-4 rounded-lg hover:bg-primary/10 text-dark/80 hover:text-primary transition-all hover:translate-x-2">社会价值</a>
+    </div>
+  </div>
+</header>
+
+<!-- 首屏 -->
+<section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 pb-20 gradient-bg">
+  <div id="particles"></div>
+  <div class="absolute inset-0 -z-10 overflow-hidden">
+    <div class="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-accent/40 rounded-full blur-3xl opacity-60 float-animation"></div>
+    <div class="absolute bottom-[-15%] left-[-10%] w-[550px] h-[550px] bg-secondary/30 rounded-full blur-3xl opacity-50 float-animation" style="animation-delay: 1s;"></div>
+    <div class="absolute top-1/4 left-1/4 w-[300px] h-[300px] bg-primary/20 rounded-full blur-3xl opacity-30 float-animation" style="animation-delay: 2s;"></div>
+  </div>
+  
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div class="animate-up slide-in-left" style="animation-delay:0.1s">
+        <h1 class="text-[clamp(2.4rem,6vw,4.2rem)] font-bold leading-tight tracking-tight">
+          情暖桑榆<br>
+          <span class="shimmer-text">社区互助养老助行服务计划</span>
+        </h1>
+        <p class="mt-8 text-lg text-gray leading-relaxed max-w-xl">
+          以青春之力守护长者岁月，解决高龄、独居、行动不便老人"出门难、办事难、就医难"，构建可信赖、可持续、有温度的社区互助体系。
+        </p>
+        <div class="mt-10 flex flex-wrap gap-5">
+          <a href="#join" class="relative overflow-hidden px-8 py-4 bg-primary text-white rounded-xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 font-medium group glow-animation">
+            <span class="relative z-10">加入我们</span>
+            <div class="absolute inset-0 bg-gradient-to-r from-primary to-secondary transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
+          </a>
+          <a href="#message" class="relative gradient-border px-8 py-4 border border-primary/20 text-primary rounded-xl hover:bg-primary/5 transition-all hover:-translate-y-1 font-medium group">
+            <span class="group-hover:text-primary/90 transition-colors">我要留言</span>
+          </a>
+        </div>
+      </div>
+      <div class="hidden md:block animate-scale slide-in-right" style="animation-delay:0.3s">
+        <div class="glass rounded-3xl p-8 shadow-xl gradient-border hover-lift">
+          <div class="w-full h-[400px] bg-gradient-to-br from-primary/5 via-accent/5 to-base rounded-2xl flex flex-col items-center justify-center relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-transparent via-primary/5 to-transparent animate-pulse"></div>
+            <i class="fa fa-heart text-8xl text-primary/20 mb-8 relative z-10 float-animation"></i>
+            <h3 class="text-2xl font-semibold text-gradient relative z-10">莫道桑榆晚，为霞尚满天</h3>
+            <p class="mt-4 text-sm text-gray relative z-10">用陪伴，守护每一段温暖晚年</p>
+            <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-secondary/20 rounded-full blur-2xl"></div>
+            <div class="absolute -top-10 -left-10 w-40 h-40 bg-accent/20 rounded-full blur-2xl"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 项目概况 -->
+<section id="about" class="py-24 relative gradient-bg">
+  <div class="absolute inset-0 overflow-hidden">
+    <div class="absolute -top-20 -right-20 w-80 h-80 bg-accent/20 rounded-full blur-3xl opacity-40"></div>
+    <div class="absolute -bottom-20 -left-20 w-80 h-80 bg-secondary/20 rounded-full blur-3xl opacity-40"></div>
+  </div>
+  
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="text-center mb-16">
+      <p class="text-primary text-sm font-medium uppercase tracking-widest mb-2">About Project</p>
+      <h2 class="text-3xl md:text-5xl font-bold">项目概况</h2>
+      <p class="mt-4 text-gray max-w-2xl mx-auto">基于社区、面向长者、构建可持续互助养老服务网络</p>
+    </div>
+    <div class="grid md:grid-cols-2 gap-10">
+      <div class="glass rounded-3xl p-8 card shadow-premium gradient-border hover-lift">
+        <h3 class="text-xl font-semibold mb-5 flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary pulse-animation">
+            <i class="fa fa-lightbulb-o"></i>
+          </div>
+          项目理念与名称
+        </h3>
+        <p class="text-gray leading-relaxed mb-4">
+          <span class="text-dark font-medium text-lg shimmer-text">项目名称：情暖桑榆</span><br>
+          取自古典诗句，寓意以青春热忱温暖长者晚年，传递敬老、爱老、助老的当代精神。
+        </p>
+        <p class="text-gray leading-relaxed">
+          设计理念：聚焦老人最真实、最迫切的生活需求，将零散善意转化为标准化、可信赖、可持续的社区服务。
+        </p>
+      </div>
+      <div class="glass rounded-3xl p-8 card shadow-premium gradient-border hover-lift">
+        <h3 class="text-xl font-semibold mb-5 flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary pulse-animation">
+            <i class="fa fa-info"></i>
+          </div>
+          项目背景
+        </h3>
+        <ul class="space-y-4 text-gray">
+          <li class="flex items-start gap-3 hover:translate-x-2 transition-transform">
+            <i class="fa fa-check-circle text-primary mt-1"></i>
+            <span>中国60岁以上人口超3亿，老龄化持续加深，高龄老人年增百万</span>
+          </li>
+          <li class="flex items-start gap-3 hover:translate-x-2 transition-transform">
+            <i class="fa fa-check-circle text-primary mt-1"></i>
+            <span>政策强力支持：积极应对老龄化国家战略、十四五养老服务规划</span>
+          </li>
+          <li class="flex items-start gap-3 hover:translate-x-2 transition-transform">
+            <i class="fa fa-check-circle text-primary mt-1"></i>
+            <span>行业痛点：服务悬浮、供给零散、关怀浅表，难以满足刚需</span>
+          </li>
+          <li class="flex items-start gap-3 hover:translate-x-2 transition-transform">
+            <i class="fa fa-check-circle text-primary mt-1"></i>
+            <span>立项初衷：让每位老人在需要时，都能找到可靠、温暖的帮助</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="mt-12 glass rounded-3xl p-8 card shadow-premium gradient-border hover-lift">
+      <h3 class="text-xl font-semibold mb-5 flex items-center gap-2">
+        <div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary pulse-animation">
+          <i class="fa fa-users"></i>
+        </div>
+        服务对象全景
+      </h3>
+      <div class="grid md:grid-cols-4 gap-4 text-sm">
+        <div class="p-4 bg-base rounded-xl hover-lift hover:shadow-lg transition-all">
+          <h4 class="font-medium text-primary shimmer-text">核心群体</h4>
+          <p class="text-gray mt-1">70岁以上行动不便老人</p>
+          <p class="text-gray mt-1">独居/空巢老人</p>
+          <p class="text-gray mt-1">残疾/半失能老人</p>
+        </div>
+        <div class="p-4 bg-base rounded-xl hover-lift hover:shadow-lg transition-all">
+          <h4 class="font-medium text-primary shimmer-text">重点群体</h4>
+          <p class="text-gray mt-1">80岁以上高龄老人</p>
+          <p class="text-gray mt-1">慢性病长期服药老人</p>
+          <p class="text-gray mt-1">无人陪同就医老人</p>
+        </div>
+        <div class="p-4 bg-base rounded-xl hover-lift hover:shadow-lg transition-all">
+          <h4 class="font-medium text-primary shimmer-text">次要群体</h4>
+          <p class="text-gray mt-1">60-70岁活力老人</p>
+          <p class="text-gray mt-1">需临时搬运协助老人</p>
+          <p class="text-gray mt-1">需要情感陪伴老人</p>
+        </div>
+        <div class="p-4 bg-base rounded-xl hover-lift hover:shadow-lg transition-all">
+          <h4 class="font-medium text-primary shimmer-text">合作方</h4>
+          <p class="text-gray mt-1">社区/街道/卫生站</p>
+          <p class="text-gray mt-1">药店/商超/便民商户</p>
+          <p class="text-gray mt-1">公益组织/爱心企业</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 需求分析 -->
+<section class="py-24 bg-white relative overflow-hidden">
+  <div class="absolute inset-0 overflow-hidden">
+    <div class="absolute top-1/3 left-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-1/3 right-1/4 w-64 h-64 bg-secondary/5 rounded-full blur-3xl"></div>
+  </div>
+  
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="text-center mb-16">
+      <p class="text-primary text-sm font-medium uppercase tracking-widest mb-2">Demand Analysis</p>
+      <h2 class="text-3xl md:text-5xl font-bold">需求分析</h2>
+      <p class="mt-4 text-gray max-w-2xl mx-auto">深度挖掘长者真实需求，打造精准服务体系</p>
+    </div>
+    <div class="grid md:grid-cols-2 gap-10">
+      <div class="glass rounded-3xl p-8 card shadow-premium gradient-border hover-lift">
+        <h3 class="text-xl font-semibold mb-6">老年群体需求</h3>
+        <div class="space-y-4">
+          <div class="p-4 bg-base rounded-xl hover-lift transition-all group hover:shadow-md">
+            <h4 class="font-medium flex items-center gap-2 group-hover:text-primary transition-colors"><i class="fa fa-shopping-basket text-primary"></i> 生活事务需求</h4>
+            <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">代购药品、生活用品、代缴水电燃气费、代取快递、证件办理</p>
+          </div>
+          <div class="p-4 bg-base rounded-xl hover-lift transition-all group hover:shadow-md">
+            <h4 class="font-medium flex items-center gap-2 group-hover:text-primary transition-colors"><i class="fa fa-hospital-o text-primary"></i> 医疗健康需求</h4>
+            <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">陪同就医、取药、用药提醒、药品整理、健康咨询协助</p>
+          </div>
+          <div class="p-4 bg-base rounded-xl hover-lift transition-all group hover:shadow-md">
+            <h4 class="font-medium flex items-center gap-2 group-hover:text-primary transition-colors"><i class="fa fa-mobile text-primary"></i> 数字适应需求</h4>
+            <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">智能手机使用、验证码、健康码、挂号、医保查询</p>
+          </div>
+          <div class="p-4 bg-base rounded-xl hover-lift transition-all group hover:shadow-md">
+            <h4 class="font-medium flex items-center gap-2 group-hover:text-primary transition-colors"><i class="fa fa-heart text-primary"></i> 情感陪伴需求</h4>
+            <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">聊天倾听、节日关怀、心理疏导、社交陪伴</p>
+          </div>
+          <div class="p-4 bg-base rounded-xl hover-lift transition-all group hover:shadow-md">
+            <h4 class="font-medium flex items-center gap-2 group-hover:text-primary transition-colors"><i class="fa fa-shield text-primary"></i> 安全保障需求</h4>
+            <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">防诈骗、居家安全、应急联络、出行安全</p>
+          </div>
+        </div>
+      </div>
+      <div class="glass rounded-3xl p-8 card shadow-premium gradient-border hover-lift">
+        <h3 class="text-xl font-semibold mb-6">青年与社区需求</h3>
+        <div class="space-y-4">
+          <div class="p-4 bg-base rounded-xl hover-lift transition-all group hover:shadow-md">
+            <h4 class="font-medium flex items-center gap-2 group-hover:text-primary transition-colors"><i class="fa fa-graduation-cap text-primary"></i> 青年实践需求</h4>
+            <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">社会实践、志愿服务时长、能力提升、就业储备</p>
+          </div>
+          <div class="p-4 bg-base rounded-xl hover-lift transition-all group hover:shadow-md">
+            <h4 class="font-medium flex items-center gap-2 group-hover:text-primary transition-colors"><i class="fa fa-users text-primary"></i> 社区治理需求</h4>
+            <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">完善养老服务、解决民生痛点、提升社区满意度</p>
+          </div>
+          <div class="p-4 bg-base rounded-xl hover-lift transition-all group hover:shadow-md">
+            <h4 class="font-medium flex items-center gap-2 group-hover:text-primary transition-colors"><i class="fa fa-home text-primary"></i> 家庭子女需求</h4>
+            <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">远程安心、专业照护、紧急响应、日常陪伴</p>
+          </div>
+          <div class="p-4 bg-base rounded-xl hover-lift transition-all group hover:shadow-md">
+            <h4 class="font-medium flex items-center gap-2 group-hover:text-primary transition-colors"><i class="fa fa-line-chart text-primary"></i> 社会发展需求</h4>
+            <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">应对老龄化、激活社区资源、促进代际融合</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 服务体系 -->
+<section id="service" class="py-24 relative gradient-bg">
+  <div class="absolute inset-0 overflow-hidden">
+    <div class="absolute top-0 right-0 w-96 h-96 bg-accent/20 rounded-full blur-3xl opacity-30"></div>
+    <div class="absolute bottom-0 left-0 w-96 h-96 bg-secondary/20 rounded-full blur-3xl opacity-30"></div>
+  </div>
+  
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="text-center mb-16">
+      <p class="text-primary text-sm font-medium uppercase tracking-widest mb-2">Service System</p>
+      <h2 class="text-3xl md:text-5xl font-bold">服务体系</h2>
+      <p class="mt-4 text-gray max-w-2xl mx-auto">专业、可靠、有温度的实体助老服务</p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="glass rounded-2xl p-8 card shadow-premium gradient-border hover-lift group">
+        <div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+          <i class="fa fa-medkit text-primary text-2xl"></i>
+        </div>
+        <h3 class="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">药品安心购</h3>
+        <p class="text-gray leading-relaxed text-sm group-hover:text-gray-600 transition-colors">
+          与社区药店建立用药档案，凭授权代购，确保药品准确安全，解决老人购药难题。提供用药提醒、药品整理、过期药清理。
+        </p>
+      </div>
+      <div class="glass rounded-2xl p-8 card shadow-premium gradient-border hover-lift group">
+        <div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+          <i class="fa fa-hospital-o text-primary text-2xl"></i>
+        </div>
+        <h3 class="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">办事无忧陪</h3>
+        <p class="text-gray leading-relaxed text-sm group-hover:text-gray-600 transition-colors">
+          陪同就医、银行/政务办理，提前备材料、预约时间、全程协助沟通。提供取号、排队、报告打印、费用结算全流程服务。
+        </p>
+      </div>
+      <div class="glass rounded-2xl p-8 card shadow-premium gradient-border hover-lift group">
+        <div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+          <i class="fa fa-book text-primary text-2xl"></i>
+        </div>
+        <h3 class="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">记忆留声</h3>
+        <p class="text-gray leading-relaxed text-sm group-hover:text-gray-600 transition-colors">
+          记录老人故事、整理老照片记忆，制作纪念册，传递情感与温暖。通过口述历史、影像记录，留存长者人生智慧。
+        </p>
+      </div>
+    </div>
+    <div class="mt-8 grid md:grid-cols-3 gap-6">
+      <div class="glass rounded-2xl p-8 card shadow-premium gradient-border hover-lift group">
+        <div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+          <i class="fa fa-shopping-bag text-primary text-2xl"></i>
+        </div>
+        <h3 class="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">基础代办代跑</h3>
+        <p class="text-gray leading-relaxed text-sm group-hover:text-gray-600 transition-colors">
+          代购生活物资、代缴费用、代取快递、证件办理等日常事务。提供标准化、可追溯、安全可靠的代办服务。
+        </p>
+      </div>
+      <div class="glass rounded-2xl p-8 card shadow-premium gradient-border hover-lift group">
+        <div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+          <i class="fa fa-exclamation-circle text-primary text-2xl"></i>
+        </div>
+        <h3 class="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">紧急跑腿服务</h3>
+        <p class="text-gray leading-relaxed text-sm group-hover:text-gray-600 transition-colors">
+          紧急购药、突发事务处理，承诺2小时内快速响应。建立应急联络机制，保障长者突发需求。
+        </p>
+      </div>
+      <div class="glass rounded-2xl p-8 card shadow-premium gradient-border hover-lift group">
+        <div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+          <i class="fa fa-shield text-primary text-2xl"></i>
+        </div>
+        <h3 class="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">长者安全系统</h3>
+        <p class="text-gray leading-relaxed text-sm group-hover:text-gray-600 transition-colors">
+          每日平安打卡、药品整理、反诈宣传、健康关怀。与社区、警务、医疗联动，构建全方位安全防护网。
+        </p>
+      </div>
+    </div>
+    <div class="mt-12 glass rounded-3xl p-8 card shadow-premium gradient-border hover-lift">
+      <h3 class="text-xl font-semibold mb-5">服务全流程标准</h3>
+      <div class="grid md:grid-cols-5 gap-4 text-center text-sm">
+        <div class="p-4 bg-base rounded-xl hover-lift hover:shadow-md transition-all group">
+          <i class="fa fa-pencil text-primary text-xl mb-2 group-hover:scale-125 transition-transform"></i>
+          <h4 class="font-medium group-hover:text-primary transition-colors">需求登记</h4>
+          <p class="text-gray mt-1 group-hover:text-gray-600 transition-colors">线上/线下/电话/代登记</p>
+        </div>
+        <div class="p-4 bg-base rounded-xl hover-lift hover:shadow-md transition-all group">
+          <i class="fa fa-list text-primary text-xl mb-2 group-hover:scale-125 transition-transform"></i>
+          <h4 class="font-medium group-hover:text-primary transition-colors">派单匹配</h4>
+          <p class="text-gray mt-1 group-hover:text-gray-600 transition-colors">按距离/技能/经验匹配</p>
+        </div>
+        <div class="p-4 bg-base rounded-xl hover-lift hover:shadow-md transition-all group">
+          <i class="fa fa-check-circle text-primary text-xl mb-2 group-hover:scale-125 transition-transform"></i>
+          <h4 class="font-medium group-hover:text-primary transition-colors">服务执行</h4>
+          <p class="text-gray mt-1 group-hover:text-gray-600 transition-colors">持证上岗/全程留痕</p>
+        </div>
+        <div class="p-4 bg-base rounded-xl hover-lift hover:shadow-md transition-all group">
+          <i class="fa fa-undo text-primary text-xl mb-2 group-hover:scale-125 transition-transform"></i>
+          <h4 class="font-medium group-hover:text-primary transition-colors">回访确认</h4>
+          <p class="text-gray mt-1 group-hover:text-gray-600 transition-colors">48小时满意度回访</p>
+        </div>
+        <div class="p-4 bg-base rounded-xl hover-lift hover:shadow-md transition-all group">
+          <i class="fa fa-database text-primary text-xl mb-2 group-hover:scale-125 transition-transform"></i>
+          <h4 class="font-medium group-hover:text-primary transition-colors">档案归档</h4>
+          <p class="text-gray mt-1 group-hover:text-gray-600 transition-colors">数据留存/持续优化</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 运营模式 -->
+<section id="operation" class="py-24 bg-white relative overflow-hidden">
+  <div class="absolute inset-0 overflow-hidden">
+    <div class="absolute top-10 left-10 w-80 h-80 bg-primary/5 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-10 right-10 w-80 h-80 bg-secondary/5 rounded-full blur-3xl"></div>
+  </div>
+  
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="text-center mb-16">
+      <p class="text-primary text-sm font-medium uppercase tracking-widest mb-2">Operation Mode</p>
+      <h2 class="text-3xl md:text-5xl font-bold">运营模式</h2>
+      <p class="mt-4 text-gray max-w-2xl mx-auto">标准化、轻资产、可持续的运营体系</p>
+    </div>
+    <div class="grid md:grid-cols-2 gap-10">
+      <div class="glass rounded-3xl p-8 card shadow-premium gradient-border hover-lift">
+        <h3 class="text-xl font-semibold mb-6">组织运营体系</h3>
+        <div class="space-y-5">
+          <div class="p-4 bg-base rounded-xl hover-lift hover:shadow-md transition-all group">
+            <h4 class="font-medium group-hover:text-primary transition-colors">三级管理结构</h4>
+            <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">项目中心 → 社区服务站 → 服务执行小组</p>
+            <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">项目经理、服务督导、专职社工、骨干队员</p>
+          </div>
+          <div class="p-4 bg-base rounded-xl hover-lift hover:shadow-md transition-all group">
+            <h4 class="font-medium group-hover:text-primary transition-colors">社区多方联动</h4>
+            <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">与社区、商户、卫生机构建立合作绿色通道</p>
+            <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">资源共享、服务共联、品牌共建</p>
+          </div>
+          <div class="p-4 bg-base rounded-xl hover-lift hover:shadow-md transition-all group">
+            <h4 class="font-medium group-hover:text-primary transition-colors">工作者全流程管理</h4>
+            <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">招募→培训→考核→上岗→激励→保障一体化</p>
+            <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">服务时长、服务质量、用户评价三重考核</p>
+          </div>
+        </div>
+      </div>
+      <div class="glass rounded-3xl p-8 card shadow-premium gradient-border hover-lift">
+        <h3 class="text-xl font-semibold mb-6">服务与可持续运营</h3>
+        <div class="space-y-5">
+          <div class="p-4 bg-base rounded-xl hover-lift hover:shadow-md transition-all group">
+            <h4 class="font-medium group-hover:text-primary transition-colors">全流程标准化</h4>
+            <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">需求→执行→回访→归档，全程可追溯、可监督</p>
+            <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">统一服务单、统一工牌、统一流程、统一话术</p>
+          </div>
+          <div class="p-4 bg-base rounded-xl hover-lift hover:shadow-md transition-all group">
+            <h4 class="font-medium group-hover:text-primary transition-colors">公益+低偿双轨制</h4>
+            <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">基础服务免费，个性化低偿，价格仅为市场30%-50%</p>
+            <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">政府购买+社会赞助+低偿服务+公益捐赠多元收入</p>
+          </div>
+          <div class="p-4 bg-base rounded-xl hover-lift hover:shadow-md transition-all group">
+            <h4 class="font-medium group-hover:text-primary transition-colors">轻资产低成本</h4>
+            <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">依托社区场地、公共交通，无重资产投入</p>
+            <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">单社区月运营成本控制在1万元内</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-14">
+      <h3 class="text-xl font-semibold mb-8 text-center">宣传推广模式</h3>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="glass rounded-2xl p-6 card shadow-premium gradient-border hover-lift group">
+          <h4 class="font-semibold flex items-center gap-2 mb-3 group-hover:text-primary transition-colors">
+            <i class="fa fa-map-marker text-primary"></i>线下精准推广
+          </h4>
+          <ul class="text-sm text-gray space-y-2">
+            <li class="hover:translate-x-2 transition-transform">• 社区公告栏、楼栋海报、老年活动中心</li>
+            <li class="hover:translate-x-2 transition-transform">• 现场体验、服务演示、熟人口碑传播</li>
+            <li class="hover:translate-x-2 transition-transform">• 社区热心骨干、志愿者带动信任</li>
+            <li class="hover:translate-x-2 transition-transform">• 社区节日活动、健康讲座、反诈宣传植入</li>
+            <li class="hover:translate-x-2 transition-transform">• 上门走访、需求调研、一对一讲解</li>
+          </ul>
+        </div>
+        <div class="glass rounded-2xl p-6 card shadow-premium gradient-border hover-lift group">
+          <h4 class="font-semibold flex items-center gap-2 mb-3 group-hover:text-primary transition-colors">
+            <i class="fa fa-wifi text-primary"></i>线上品牌传播
+          </h4>
+          <ul class="text-sm text-gray space-y-2">
+            <li class="hover:translate-x-2 transition-transform">• 抖音账号、日常服务纪实、直播宣传</li>
+            <li class="hover:translate-x-2 transition-transform">• 社区业主群、每周服务报告公示</li>
+            <li class="hover:translate-x-2 transition-transform">• 老客推荐、口碑裂变、信任传递</li>
+            <li class="hover:translate-x-2 transition-transform">• 家属远程见证、服务短视频传播</li>
+            <li class="hover:translate-x-2 transition-transform">• 地方媒体、公益平台、政府公众号宣传</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 创新亮点 -->
+<section id="innovation" class="py-24 relative gradient-bg">
+  <div class="absolute inset-0 overflow-hidden">
+    <div class="absolute -top-20 left-1/3 w-96 h-96 bg-primary/10 rounded-full blur-3xl opacity-30"></div>
+    <div class="absolute -bottom-20 right-1/3 w-96 h-96 bg-secondary/10 rounded-full blur-3xl opacity-30"></div>
+  </div>
+  
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="text-center mb-16">
+      <p class="text-primary text-sm font-medium uppercase tracking-widest mb-2">Innovation</p>
+      <h2 class="text-3xl md:text-5xl font-bold">创新亮点</h2>
+      <p class="mt-4 text-gray max-w-2xl mx-auto">模式创新、机制创新、价值创新</p>
+    </div>
+    <div class="max-w-3xl mx-auto space-y-6">
+      <div class="glass rounded-2xl p-8 card shadow-premium gradient-border hover-lift group">
+        <h3 class="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">模式创新：从悬浮到落地，从表面到刚需</h3>
+        <p class="text-gray leading-relaxed text-sm group-hover:text-gray-600 transition-colors">
+          抛弃悬浮式养老服务，聚焦老人高频刚需：代购药品、陪同就医、代办缴费，构建"工作者+社区网格"实体服务网络，精准解决最后一百米难题。实现服务从"有"到"有用"的转变。
+        </p>
+      </div>
+      <div class="glass rounded-2xl p-8 card shadow-premium gradient-border hover-lift group">
+        <h3 class="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">机制创新：从单次到长效，从善意到体系</h3>
+        <p class="text-gray leading-relaxed text-sm group-hover:text-gray-600 transition-colors">
+          将单次服务转化为可累积、可信任的社区资产，依托熟人社会建立可持续邻里互助，超越传统单向帮扶，形成双向共赢的长效机制。建立服务积分、信任档案、激励体系。
+        </p>
+      </div>
+      <div class="glass rounded-2xl p-8 card shadow-premium gradient-border hover-lift group">
+        <h3 class="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">价值创新：从服务到生态，从助老到共治</h3>
+        <p class="text-gray leading-relaxed text-sm group-hover:text-gray-600 transition-colors">
+          实现三重价值共赢：解决老人生活难题、助力青年能力成长、重建社区温暖文化，打造助人、育人、暖社区的综合社会价值。推动社区治理创新、代际融合、邻里互助生态形成。
+        </p>
+      </div>
+      <div class="glass rounded-2xl p-8 card shadow-premium gradient-border hover-lift group">
+        <h3 class="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">技术创新：轻量化、数字化、可信化</h3>
+        <p class="text-gray leading-relaxed text-sm group-hover:text-gray-600 transition-colors">
+          采用极简数字化管理，无需复杂系统，通过标准化单据、流程化操作、可视化监督，实现低成本、高可靠、易复制的运营模式。全程留痕、多方监督、安全可追溯。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 核心团队 -->
+<section id="team" class="py-24 bg-white relative overflow-hidden">
+  <div class="absolute inset-0 overflow-hidden">
+    <div class="absolute top-0 right-0 w-80 h-80 bg-primary/5 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-0 left-0 w-80 h-80 bg-secondary/5 rounded-full blur-3xl"></div>
+  </div>
+  
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="text-center mb-16">
+      <p class="text-primary text-sm font-medium uppercase tracking-widest mb-2">Core Team</p>
+      <h2 class="text-3xl md:text-5xl font-bold">核心团队</h2>
+      <p class="mt-4 text-gray max-w-2xl mx-auto">专业、稳定、高效的核心团队</p>
+    </div>
+
+    <div class="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-6 mb-10">
+      <div class="glass rounded-2xl p-6 card text-center shadow-premium gradient-border hover-lift group">
+        <div class="w-16 h-16 rounded-full bg-primary/10 mx-auto flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+          <i class="fa fa-user-circle-o text-primary text-2xl"></i>
+        </div>
+        <h4 class="font-semibold text-lg group-hover:text-primary transition-colors">庞新雷</h4>
+        <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">项目负责人</p>
+        <p class="text-xs text-gray mt-2 group-hover:text-gray-600 transition-colors">整体规划、资源整合、战略方向</p>
+      </div>
+      <div class="glass rounded-2xl p-6 card text-center shadow-premium gradient-border hover-lift group">
+        <div class="w-16 h-16 rounded-full bg-primary/10 mx-auto flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+          <i class="fa fa-cogs text-primary text-2xl"></i>
+        </div>
+        <h4 class="font-semibold text-lg group-hover:text-primary transition-colors">费佳顺</h4>
+        <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">运营经理</p>
+        <p class="text-xs text-gray mt-2 group-hover:text-gray-600 transition-colors">日常运营、服务管理、团队建设</p>
+      </div>
+      <div class="glass rounded-2xl p-6 card text-center shadow-premium gradient-border hover-lift group">
+        <div class="w-16 h-16 rounded-full bg-primary/10 mx-auto flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+          <i class="fa fa-user-o text-primary text-2xl"></i>
+        </div>
+        <h4 class="font-semibold text-lg group-hover:text-primary transition-colors">王胡森</h4>
+        <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">服务督导与质量管理</p>
+        <p class="text-xs text-gray mt-2 group-hover:text-gray-600 transition-colors">标准制定、质量监控，人员培训</p>
+      </div>
+      <div class="glass rounded-2xl p-6 card text-center shadow-premium gradient-border hover-lift group">
+        <div class="w-16 h-16 rounded-full bg-primary/10 mx-auto flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+          <i class="fa fa-user-o text-primary text-2xl"></i>
+        </div>
+        <h4 class="font-semibold text-lg group-hover:text-primary transition-colors">郑舒艺</h4>
+        <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">市场与品牌专员</p>
+        <p class="text-xs text-gray mt-2 group-hover:text-gray-600 transition-colors">品牌塑造，内容传播，活动推广</p>
+      </div>
+      <div class="glass rounded-2xl p-6 card text-center shadow-premium gradient-border hover-lift group">
+        <div class="w-16 h-16 rounded-full bg-primary/10 mx-auto flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+          <i class="fa fa-user-o text-primary text-2xl"></i>
+        </div>
+        <h4 class="font-semibold text-lg group-hover:text-primary transition-colors">娄镫之</h4>
+        <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">财务与行政专员</p>
+        <p class="text-xs text-gray mt-2 group-hover:text-gray-600 transition-colors">账务管理，成本控制，行政支持</p>
+      </div> 
+      <div class="glass rounded-2xl p-6 card text-center shadow-premium gradient-border hover-lift group">
+        <div class="w-16 h-16 rounded-full bg-primary/10 mx-auto flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+          <i class="fa fa-user-o text-primary text-2xl"></i>
+        </div>
+        <h4 class="font-semibold text-lg group-hover:text-primary transition-colors">杨彩艺</h4>
+        <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">社区关系专员</p>
+        <p class="text-xs text-gray mt-2 group-hover:text-gray-600 transition-colors">关系搭建，需求洞察，信任维系</p>
+      </div> 
+      <div class="glass rounded-2xl p-6 card text-center shadow-premium gradient-border hover-lift group">
+        <div class="w-16 h-16 rounded-full bg-primary/10 mx-auto flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+          <i class="fa fa-user-o text-primary text-2xl"></i>
+        </div>
+        <h4 class="font-semibold text-lg group-hover:text-primary transition-colors">于海洋</h4>
+        <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">信息技术支持</p>
+        <p class="text-xs text-gray mt-2 group-hover:text-gray-600 transition-colors">工具维护，流程优化，数据保全</p>
+      </div> 
+      <div class="glass rounded-2xl p-6 card text-center shadow-premium gradient-border hover-lift group">
+        <div class="w-16 h-16 rounded-full bg-primary/10 mx-auto flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+          <i class="fa fa-user-o text-primary text-2xl"></i>
+        </div>
+        <h4 class="font-semibold text-lg group-hover:text-primary transition-colors">李明翰</h4>
+        <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">信息技术支持</p>
+        <p class="text-xs text-gray mt-2 group-hover:text-gray-600 transition-colors">工具维护，流程优化，数据保全</p>
+      </div> 
+      <div class="glass rounded-2xl p-6 card text-center shadow-premium gradient-border hover-lift group">
+        <div class="w-16 h-16 rounded-full bg-primary/10 mx-auto flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+          <i class="fa fa-user-o text-primary text-2xl"></i>
+        </div>
+        <h4 class="font-semibold text-lg group-hover:text-primary transition-colors">王铭昊</h4>
+        <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">核心区域站长</p>
+        <p class="text-xs text-gray mt-2 group-hover:text-gray-600 transition-colors">片区运营，问题解决，口碑落地</p>
+      </div>
+      <div class="glass rounded-2xl p-6 card text-center shadow-premium gradient-border hover-lift group">
+        <div class="w-16 h-16 rounded-full bg-primary/10 mx-auto flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+          <i class="fa fa-user-o text-primary text-2xl"></i>
+        </div>
+        <h4 class="font-semibold text-lg group-hover:text-primary transition-colors">董建辉</h4>
+        <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">服务者</p>
+        <p class="text-xs text-gray mt-2 group-hover:text-gray-600 transition-colors">帮助以上共同解决问题</p>
+      </div>
+      <div class="glass rounded-2xl p-6 card text-center shadow-premium gradient-border hover-lift group">
+        <div class="w-16 h-16 rounded-full bg-primary/10 mx-auto flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+          <i class="fa fa-user-o text-primary text-2xl"></i>
+        </div>
+        <h4 class="font-semibold text-lg group-hover:text-primary transition-colors">曹胜柏</h4>
+        <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">服务者</p>
+        <p class="text-xs text-gray mt-2 group-hover:text-gray-600 transition-colors">帮助以上共同解决问题</p>
+      </div>   
+    </div>
+
+    <div class="max-w-xl mx-auto">
+      <h3 class="text-xl font-semibold mb-6 text-center">组织管理架构</h3>
+      <div class="glass rounded-2xl p-8 card shadow-premium gradient-border hover-lift">
+        <div class="flex flex-col items-center gap-4">
+          <div class="w-48 py-3 bg-primary/10 rounded-xl text-center font-medium hover:bg-primary/20 transition-colors group hover:scale-105 transition-transform">项目中心</div>
+          <i class="fa fa-arrow-down text-primary pulse-animation"></i>
+          <div class="w-48 py-3 bg-primary/10 rounded-xl text-center font-medium hover:bg-primary/20 transition-colors group hover:scale-105 transition-transform">社区服务站</div>
+          <i class="fa fa-arrow-down text-primary pulse-animation"></i>
+          <div class="w-48 py-3 bg-primary/10 rounded-xl text-center font-medium hover:bg-primary/20 transition-colors group hover:scale-105 transition-transform">服务执行小组</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 招募工作者 -->
+<section id="join" class="py-24 relative gradient-bg">
+  <div class="absolute inset-0 overflow-hidden">
+    <div class="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl opacity-30"></div>
+    <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl opacity-30"></div>
+  </div>
+  
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="text-center mb-16">
+      <p class="text-primary text-sm font-medium uppercase tracking-widest mb-2">Join Us</p>
+      <h2 class="text-3xl md:text-5xl font-bold">招募助老工作者</h2>
+      <p class="mt-4 text-gray max-w-xl mx-auto">欢迎有爱心、有耐心、有责任感的你加入，用行动温暖长者晚年</p>
+    </div>
+
+    <div class="glass rounded-3xl p-10 card shadow-premium max-w-3xl mx-auto gradient-border hover-lift">
+      <form class="space-y-5">
+        <div class="grid md:grid-cols-2 gap-5">
+          <div>
+            <label class="text-sm font-medium block mb-2">姓名</label>
+            <input type="text" placeholder="请输入您的真实姓名" class="input-style hover:border-primary/50 transition-colors" required>
+          </div>
+          <div>
+            <label class="text-sm font-medium block mb-2">联系电话</label>
+            <input type="tel" placeholder="请输入有效手机号" class="input-style hover:border-primary/50 transition-colors" required>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-5">
+          <div>
+            <label class="text-sm font-medium block mb-2">年龄</label>
+            <input type="text" placeholder="请输入年龄" class="input-style hover:border-primary/50 transition-colors">
+          </div>
+          <div>
+            <label class="text-sm font-medium block mb-2">可服务时间段</label>
+            <select class="input-style hover:border-primary/50 transition-colors">
+              <option>工作日白天</option>
+              <option>工作日晚上</option>
+              <option>周末/节假日</option>
+              <option>时间灵活，随时可服务</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="text-sm font-medium block mb-2">相关经验/技能</label>
+          <textarea rows="3" placeholder="如：陪护经验、护理知识、沟通能力、驾驶、急救等" class="input-style hover:border-primary/50 transition-colors"></textarea>
+        </div>
+
+        <div>
+          <label class="text-sm font-medium block mb-2">个人申请说明</label>
+          <textarea rows="4" placeholder="请简单介绍自己，以及您希望加入助老服务的原因" class="input-style hover:border-primary/50 transition-colors"></textarea>
+        </div>
+
+        <button type="button" onclick="submitForm()" 
+          class="relative overflow-hidden w-full py-4 bg-primary text-white rounded-xl font-medium shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 group glow-animation">
+          <span class="relative z-10">提交报名申请</span>
+          <div class="absolute inset-0 bg-gradient-to-r from-primary to-secondary transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
+        </button>
+      </form>
+    </div>
+
+    <div class="grid md:grid-cols-4 gap-6 mt-12">
+      <div class="glass rounded-2xl p-6 card text-center shadow-premium gradient-border hover-lift group">
+        <i class="fa fa-clock-o text-primary text-2xl mb-3 group-hover:scale-110 transition-transform"></i>
+        <h3 class="font-semibold group-hover:text-primary transition-colors">时间自由</h3>
+        <p class="text-gray text-sm group-hover:text-gray-600 transition-colors">灵活排班，不影响正常工作学习</p>
+      </div>
+      <div class="glass rounded-2xl p-6 card text-center shadow-premium gradient-border hover-lift group">
+        <i class="fa fa-jpy text-primary text-2xl mb-3 group-hover:scale-110 transition-transform"></i>
+        <h3 class="font-semibold group-hover:text-primary transition-colors">服务补贴</h3>
+        <p class="text-gray text-sm group-hover:text-gray-600 transition-colors">提供服务补贴 + 全勤奖励</p>
+      </div>
+      <div class="glass rounded-2xl p-6 card text-center shadow-premium gradient-border hover-lift group">
+        <i class="fa fa-certificate text-primary text-2xl mb-3 group-hover:scale-110 transition-transform"></i>
+        <h3 class="font-semibold group-hover:text-primary transition-colors">实践证书</h3>
+        <p class="text-gray text-sm group-hover:text-gray-600 transition-colors">志愿时长、实践证明、荣誉证书</p>
+      </div>
+      <div class="glass rounded-2xl p-6 card text-center shadow-premium gradient-border hover-lift group">
+        <i class="fa fa-users text-primary text-2xl mb-3 group-hover:scale-110 transition-transform"></i>
+        <h3 class="font-semibold group-hover:text-primary transition-colors">能力成长</h3>
+        <p class="text-gray text-sm group-hover:text-gray-600 transition-colors">沟通、协调、应急处理全方位提升</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 留言咨询 -->
+<section id="message" class="py-24 bg-white relative overflow-hidden">
+  <div class="absolute inset-0 overflow-hidden">
+    <div class="absolute top-0 right-0 w-80 h-80 bg-primary/5 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-0 left-0 w-80 h-80 bg-secondary/5 rounded-full blur-3xl"></div>
+  </div>
+  
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="text-center mb-16">
+      <p class="text-primary text-sm font-medium uppercase tracking-widest mb-2">Message</p>
+      <h2 class="text-3xl md:text-5xl font-bold">留言咨询</h2>
+      <p class="mt-4 text-gray max-w-xl mx-auto">服务咨询、预约、建议、合作，欢迎随时留言</p>
+    </div>
+
+    <div class="glass rounded-3xl p-10 card shadow-premium max-w-3xl mx-auto gradient-border hover-lift">
+      <form class="space-y-5">
+        <div class="grid md:grid-cols-2 gap-5">
+          <div>
+            <label class="text-sm font-medium block mb-2">您的称呼</label>
+            <input type="text" placeholder="老人/家属/志愿者均可" class="input-style hover:border-primary/50 transition-colors" required>
+          </div>
+          <div>
+            <label class="text-sm font-medium block mb-2">联系电话</label>
+            <input type="tel" placeholder="用于回复您的问题" class="input-style hover:border-primary/50 transition-colors" required>
+          </div>
+        </div>
+
+        <div>
+          <label class="text-sm font-medium block mb-2">留言类型</label>
+          <select class="input-style hover:border-primary/50 transition-colors">
+            <option>服务咨询</option>
+            <option>预约助老服务</option>
+            <option>意见与建议</option>
+            <option>商务合作</option>
+            <option>其他问题</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="text-sm font-medium block mb-2">详细留言内容</label>
+          <textarea rows="5" placeholder="请详细描述您想咨询的内容、需求或建议..." class="input-style hover:border-primary/50 transition-colors" required></textarea>
+        </div>
+
+        <button type="button" onclick="submitMessage()" 
+          class="relative overflow-hidden w-full py-4 bg-primary text-white rounded-xl font-medium shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 group glow-animation">
+          <span class="relative z-10">提交留言</span>
+          <div class="absolute inset-0 bg-gradient-to-r from-primary to-secondary transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- 社会价值 -->
+<section id="value" class="py-24 relative gradient-bg">
+  <div class="absolute inset-0 overflow-hidden">
+    <div class="absolute -top-20 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl opacity-30"></div>
+    <div class="absolute -bottom-20 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl opacity-30"></div>
+  </div>
+  
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="text-center mb-16">
+      <p class="text-primary text-sm font-medium uppercase tracking-widest mb-2">Social Value</p>
+      <h2 class="text-3xl md:text-5xl font-bold">社会价值与展望</h2>
+      <p class="mt-4 text-gray max-w-2xl mx-auto">服务民生、助力经济、创新治理</p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="glass rounded-2xl p-8 card shadow-premium gradient-border hover-lift group">
+        <h3 class="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">民生服务价值</h3>
+        <p class="text-gray leading-relaxed text-sm group-hover:text-gray-600 transition-colors">
+          切实解决老人出门难、办事难、就医难，大幅提升生活安全感、幸福感与便利性，降低养老成本。让长者在熟悉社区安享晚年。
+        </p>
+      </div>
+      <div class="glass rounded-2xl p-8 card shadow-premium gradient-border hover-lift group">
+        <h3 class="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">经济发展价值</h3>
+        <p class="text-gray leading-relaxed text-sm group-hover:text-gray-600 transition-colors">
+          激活社区闲置人力，创造灵活就业岗位，带动银发经济与本地商户联动，探索新型养老服务模式。以轻资产模式创造社会经济价值。
+        </p>
+      </div>
+      <div class="glass rounded-2xl p-8 card shadow-premium gradient-border hover-lift group">
+        <h3 class="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">社会治理价值</h3>
+        <p class="text-gray leading-relaxed text-sm group-hover:text-gray-600 transition-colors">
+          补充政府公共服务短板，促进代际融合，增强社区凝聚力，推动共建共治共享的基层治理格局。构建有温度、有活力、有韧性的现代社区。
+        </p>
+      </div>
+    </div>
+    <div class="mt-16 max-w-2xl mx-auto text-center">
+      <h3 class="text-2xl font-bold mb-6">项目愿景</h3>
+      <p class="text-gray leading-relaxed text-lg">
+        情暖桑榆不仅是一项社区服务，更是一场有尊严、有温度的老龄化社会实验。我们希望让"邻里守望、代际相助"成为社区常态，让每位老人都能在熟悉的家园里便捷、安心、温暖地生活，让青春力量在服务中成长，为构建全龄友好型社会贡献坚实力量。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- 底部 -->
+<footer class="glass-dark py-16 text-white relative overflow-hidden">
+  <div class="absolute inset-0 bg-gradient-to-br from-dark/90 via-dark to-dark"></div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+      <div class="text-center md:text-left">
+        <div class="flex items-center justify-center md:justify-start gap-2 mb-3">
+          <div class="w-8 h-8 rounded-xl bg-primary/20 flex items-center justify-center pulse-animation">
+            <i class="fa fa-heart-o text-primary"></i>
+          </div>
+          <span class="text-xl font-bold shimmer-text">情暖桑榆</span>
+        </div>
+        <p class="text-gray text-sm">社区互助养老助行服务计划</p>
+      </div>
+      <div class="text-center md:text-right">
+        <p class="text-gray text-sm">© 2026 All Rights Reserved</p>
+        <p class="text-gray text-sm mt-1">莫道桑榆晚，为霞尚满天</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // 导航滚动效果
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('shadow-xl', window.scrollY > 80);
+  });
+
+  // 移动端菜单
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  
+  menuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+  });
+
+  // 点击菜单链接后关闭菜单
+  document.querySelectorAll('#mobileMenu a').forEach(item => {
+    item.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
+    });
+  });
+
+  // 滚动动画
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate-stagger');
+      }
+    });
+  }, { threshold: 0.1 });
+  
+  document.querySelectorAll('.card').forEach(el => observer.observe(el));
+
+  // 粒子效果
+  function createParticles() {
+    const container = document.getElementById('particles');
+    if (!container) return;
+    
+    const particleCount = 30;
+    
+    for (let i = 0; i < particleCount; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      
+      const size = Math.random() * 3 + 1;
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      
+      particle.style.left = `${Math.random() * 100}%`;
+      particle.style.top = `${Math.random() * 100}%`;
+      
+      const colors = ['#B95C50', '#E8B4B8', '#F6CDCD'];
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      particle.style.backgroundColor = color;
+      
+      particle.style.opacity = Math.random() * 0.3 + 0.1;
+      
+      const duration = Math.random() * 20 + 10;
+      const delay = Math.random() * 5;
+      particle.style.animation = `float ${duration}s ease-in-out ${delay}s infinite`;
+      
+      container.appendChild(particle);
+    }
+  }
+
+  // 波纹效果
+  document.querySelectorAll('button, a[href="#join"], a[href="#message"]').forEach(el => {
+    el.addEventListener('click', function(e) {
+      const x = e.clientX - e.target.getBoundingClientRect().left;
+      const y = e.clientY - e.target.getBoundingClientRect().top;
+      
+      const ripple = document.createElement('span');
+      ripple.classList.add('ripple');
+      ripple.style.left = `${x}px`;
+      ripple.style.top = `${y}px`;
+      
+      this.appendChild(ripple);
+      
+      setTimeout(() => {
+        ripple.remove();
+      }, 600);
+    });
+  });
+
+  // 滚动进度条
+  const scrollProgress = document.getElementById('scrollProgress');
+  if (scrollProgress) {
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      scrollProgress.style.width = scrolled + '%';
+    });
+  }
+
+  // 表单提交
+  function submitForm() {
+    const form = document.querySelector('#join form');
+    const button = form.querySelector('button');
+    const originalText = button.textContent;
+    
+    button.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i>提交中...';
+    button.disabled = true;
+    
+    setTimeout(() => {
+      button.innerHTML = '<i class="fa fa-check mr-2"></i>报名成功！';
+      button.classList.remove('bg-primary');
+      button.classList.add('bg-green-500');
+      
+      const successMessage = document.createElement('div');
+      successMessage.className = 'mt-4 p-4 bg-green-50 text-green-700 rounded-xl text-center';
+      successMessage.innerHTML = `
+        <i class="fa fa-check-circle text-green-500 text-xl mb-2 block"></i>
+        <p class="font-medium">报名已提交！</p>
+        <p class="text-sm">我们将在3个工作日内与您联系 ❤️</p>
+      `;
+      
+      form.parentNode.insertBefore(successMessage, form.nextSibling);
+      form.reset();
+      
+      setTimeout(() => {
+        button.innerHTML = originalText;
+        button.disabled = false;
+        button.classList.remove('bg-green-500');
+        button.classList.add('bg-primary');
+        successMessage.remove();
+      }, 3000);
+    }, 1500);
+  }
+
+  function submitMessage() {
+    const form = document.querySelector('#message form');
+    const button = form.querySelector('button');
+    const originalText = button.textContent;
+    
+    button.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i>提交中...';
+    button.disabled = true;
+    
+    setTimeout(() => {
+      button.innerHTML = '<i class="fa fa-check mr-2"></i>留言成功！';
+      button.classList.remove('bg-primary');
+      button.classList.add('bg-green-500');
+      
+      const successMessage = document.createElement('div');
+      successMessage.className = 'mt-4 p-4 bg-green-50 text-green-700 rounded-xl text-center';
+      successMessage.innerHTML = `
+        <i class="fa fa-check-circle text-green-500 text-xl mb-2 block"></i>
+        <p class="font-medium">留言提交成功！</p>
+        <p class="text-sm">我们会尽快给您回复 😊</p>
+      `;
+      
+      form.parentNode.insertBefore(successMessage, form.nextSibling);
+      form.reset();
+      
+      setTimeout(() => {
+        button.innerHTML = originalText;
+        button.disabled = false;
+        button.classList.remove('bg-green-500');
+        button.classList.add('bg-primary');
+        successMessage.remove();
+      }, 3000);
+    }, 1500);
+  }
+
+  // 平滑滚动
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const targetId = this.getAttribute('href');
+      if (targetId === '#') return;
+      
+      const targetElement = document.querySelector(targetId);
+      if (targetElement) {
+        window.scrollTo({
+          top: targetElement.offsetTop - 80,
+          behavior: 'smooth'
+        });
+      }
+    });
+  });
+
+  // 页面加载初始化
+  document.addEventListener('DOMContentLoaded', function() {
+    createParticles();
+    
+    document.querySelectorAll('.card').forEach((card, index) => {
+      card.style.animationDelay = `${index * 0.1}s`;
+    });
+    
+    document.addEventListener('mousemove', (e) => {
+      const x = e.clientX / window.innerWidth;
+      const y = e.clientY / window.innerHeight;
+      
+      document.querySelectorAll('.float-animation').forEach(el => {
+        el.style.transform = `translate(${x * 10}px, ${y * 10}px)`;
+      });
+    });
+  });
+</script>
+</body>
+</html>
