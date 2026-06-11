@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>情暖桑榆 - 社区互助养老助行服务计划</title>
+  <title>情暖桑榆-社区互助养老助行服务</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
@@ -68,8 +69,6 @@
       .input-style {
         @apply w-full px-4 py-3 rounded-xl bg-white/70 border border-gray/20 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all;
       }
-      
-      /* 新增动画和特效 */
       .float-animation { animation: float 6s ease-in-out infinite; }
       .pulse-animation { animation: pulse 3s ease-in-out infinite; }
       .glow-animation { animation: glow 3s ease-in-out infinite; }
@@ -112,19 +111,17 @@
         from { opacity: 0; transform: translateX(-30px); }
         to { opacity: 1; transform: translateX(0); }
       }
-      
       .slide-in-right { animation: slideInRight 0.8s ease-out forwards; }
       .slide-in-left { animation: slideInLeft 0.8s ease-out forwards; }
       
       .hover-lift { transition: all 0.3s ease; }
       .hover-lift:hover { transform: translateY(-5px); }
-      
+    
       .gradient-border {
         position: relative;
         border-radius: 1.5rem;
         overflow: hidden;
       }
-      
       .gradient-border::before {
         content: '';
         position: absolute;
@@ -141,11 +138,9 @@
         opacity: 0;
         transition: opacity 0.4s ease;
       }
-      
       .gradient-border:hover::before {
         opacity: 1;
       }
-      
       .particle {
         position: absolute;
         border-radius: 50%;
@@ -200,11 +195,7 @@
   </style>
 </head>
 <body class="bg-base text-dark antialiased scroll-smooth scrollbar-hide overflow-x-hidden">
-
-<!-- 滚动进度条 -->
 <div id="scrollProgress" class="scroll-progress"></div>
-
-<!-- 导航 -->
 <header id="navbar" class="fixed w-full top-0 z-50 transition-all duration-500">
   <div class="glass mx-4 mt-3 rounded-2xl px-5 py-2 shadow-lg">
     <div class="flex justify-between items-center h-14">
@@ -244,8 +235,6 @@
     </div>
   </div>
 </header>
-
-<!-- 首屏 -->
 <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 pb-20 gradient-bg">
   <div id="particles"></div>
   <div class="absolute inset-0 -z-10 overflow-hidden">
@@ -289,8 +278,6 @@
     </div>
   </div>
 </section>
-
-<!-- 项目概况 -->
 <section id="about" class="py-24 relative gradient-bg">
   <div class="absolute inset-0 overflow-hidden">
     <div class="absolute -top-20 -right-20 w-80 h-80 bg-accent/20 rounded-full blur-3xl opacity-40"></div>
@@ -382,8 +369,6 @@
     </div>
   </div>
 </section>
-
-<!-- 需求分析 -->
 <section class="py-24 bg-white relative overflow-hidden">
   <div class="absolute inset-0 overflow-hidden">
     <div class="absolute top-1/3 left-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
@@ -446,8 +431,6 @@
     </div>
   </div>
 </section>
-
-<!-- 服务体系 -->
 <section id="service" class="py-24 relative gradient-bg">
   <div class="absolute inset-0 overflow-hidden">
     <div class="absolute top-0 right-0 w-96 h-96 bg-accent/20 rounded-full blur-3xl opacity-30"></div>
@@ -550,8 +533,6 @@
     </div>
   </div>
 </section>
-
-<!-- 运营模式 -->
 <section id="operation" class="py-24 bg-white relative overflow-hidden">
   <div class="absolute inset-0 overflow-hidden">
     <div class="absolute top-10 left-10 w-80 h-80 bg-primary/5 rounded-full blur-3xl"></div>
@@ -637,8 +618,6 @@
     </div>
   </div>
 </section>
-
-<!-- 创新亮点 -->
 <section id="innovation" class="py-24 relative gradient-bg">
   <div class="absolute inset-0 overflow-hidden">
     <div class="absolute -top-20 left-1/3 w-96 h-96 bg-primary/10 rounded-full blur-3xl opacity-30"></div>
@@ -679,8 +658,6 @@
     </div>
   </div>
 </section>
-
-<!-- 核心团队 -->
 <section id="team" class="py-24 bg-white relative overflow-hidden">
   <div class="absolute inset-0 overflow-hidden">
     <div class="absolute top-0 right-0 w-80 h-80 bg-primary/5 rounded-full blur-3xl"></div>
@@ -707,7 +684,7 @@
         <div class="w-16 h-16 rounded-full bg-primary/10 mx-auto flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
           <i class="fa fa-cogs text-primary text-2xl"></i>
         </div>
-        <h4 class="font-semibold text-lg group-hover:text-primary transition-colors">费佳顺</h4>
+        <h4 class="font-semibold text-lg group-hover:text-primary transition-colors">王胡森</h4>
         <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">运营经理</p>
         <p class="text-xs text-gray mt-2 group-hover:text-gray-600 transition-colors">日常运营、服务管理、团队建设</p>
       </div>
@@ -715,74 +692,19 @@
         <div class="w-16 h-16 rounded-full bg-primary/10 mx-auto flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
           <i class="fa fa-user-o text-primary text-2xl"></i>
         </div>
-        <h4 class="font-semibold text-lg group-hover:text-primary transition-colors">王胡森</h4>
+        <h4 class="font-semibold text-lg group-hover:text-primary transition-colors">费家顺</h4>
         <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">服务督导与质量管理</p>
         <p class="text-xs text-gray mt-2 group-hover:text-gray-600 transition-colors">标准制定、质量监控，人员培训</p>
       </div>
       <div class="glass rounded-2xl p-6 card text-center shadow-premium gradient-border hover-lift group">
         <div class="w-16 h-16 rounded-full bg-primary/10 mx-auto flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
-          <i class="fa fa-user-o text-primary text-2xl"></i>
-        </div>
-        <h4 class="font-semibold text-lg group-hover:text-primary transition-colors">郑舒艺</h4>
-        <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">市场与品牌专员</p>
-        <p class="text-xs text-gray mt-2 group-hover:text-gray-600 transition-colors">品牌塑造，内容传播，活动推广</p>
-      </div>
-      <div class="glass rounded-2xl p-6 card text-center shadow-premium gradient-border hover-lift group">
-        <div class="w-16 h-16 rounded-full bg-primary/10 mx-auto flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
-          <i class="fa fa-user-o text-primary text-2xl"></i>
-        </div>
-        <h4 class="font-semibold text-lg group-hover:text-primary transition-colors">娄镫之</h4>
-        <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">财务与行政专员</p>
-        <p class="text-xs text-gray mt-2 group-hover:text-gray-600 transition-colors">账务管理，成本控制，行政支持</p>
-      </div> 
-      <div class="glass rounded-2xl p-6 card text-center shadow-premium gradient-border hover-lift group">
-        <div class="w-16 h-16 rounded-full bg-primary/10 mx-auto flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
-          <i class="fa fa-user-o text-primary text-2xl"></i>
-        </div>
-        <h4 class="font-semibold text-lg group-hover:text-primary transition-colors">杨彩艺</h4>
-        <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">社区关系专员</p>
-        <p class="text-xs text-gray mt-2 group-hover:text-gray-600 transition-colors">关系搭建，需求洞察，信任维系</p>
-      </div> 
-      <div class="glass rounded-2xl p-6 card text-center shadow-premium gradient-border hover-lift group">
-        <div class="w-16 h-16 rounded-full bg-primary/10 mx-auto flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
-          <i class="fa fa-user-o text-primary text-2xl"></i>
+          <i class="fa fa-user-circle-o text-primary text-2xl"></i>
         </div>
         <h4 class="font-semibold text-lg group-hover:text-primary transition-colors">于海洋</h4>
         <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">信息技术支持</p>
         <p class="text-xs text-gray mt-2 group-hover:text-gray-600 transition-colors">工具维护，流程优化，数据保全</p>
-      </div> 
-      <div class="glass rounded-2xl p-6 card text-center shadow-premium gradient-border hover-lift group">
-        <div class="w-16 h-16 rounded-full bg-primary/10 mx-auto flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
-          <i class="fa fa-user-o text-primary text-2xl"></i>
-        </div>
-        <h4 class="font-semibold text-lg group-hover:text-primary transition-colors">李明翰</h4>
-        <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">信息技术支持</p>
-        <p class="text-xs text-gray mt-2 group-hover:text-gray-600 transition-colors">工具维护，流程优化，数据保全</p>
-      </div> 
-      <div class="glass rounded-2xl p-6 card text-center shadow-premium gradient-border hover-lift group">
-        <div class="w-16 h-16 rounded-full bg-primary/10 mx-auto flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
-          <i class="fa fa-user-o text-primary text-2xl"></i>
-        </div>
-        <h4 class="font-semibold text-lg group-hover:text-primary transition-colors">王铭昊</h4>
-        <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">核心区域站长</p>
-        <p class="text-xs text-gray mt-2 group-hover:text-gray-600 transition-colors">片区运营，问题解决，口碑落地</p>
       </div>
-      <div class="glass rounded-2xl p-6 card text-center shadow-premium gradient-border hover-lift group">
-        <div class="w-16 h-16 rounded-full bg-primary/10 mx-auto flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
-          <i class="fa fa-user-o text-primary text-2xl"></i>
-        </div>
-        <h4 class="font-semibold text-lg group-hover:text-primary transition-colors">董建辉</h4>
-        <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">服务者</p>
-        <p class="text-xs text-gray mt-2 group-hover:text-gray-600 transition-colors">帮助以上共同解决问题</p>
-      </div>
-      <div class="glass rounded-2xl p-6 card text-center shadow-premium gradient-border hover-lift group">
-        <div class="w-16 h-16 rounded-full bg-primary/10 mx-auto flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
-          <i class="fa fa-user-o text-primary text-2xl"></i>
-        </div>
-        <h4 class="font-semibold text-lg group-hover:text-primary transition-colors">曹胜柏</h4>
-        <p class="text-sm text-gray mt-1 group-hover:text-gray-600 transition-colors">服务者</p>
-        <p class="text-xs text-gray mt-2 group-hover:text-gray-600 transition-colors">帮助以上共同解决问题</p>
-      </div>   
+      
     </div>
 
     <div class="max-w-xl mx-auto">
@@ -799,8 +721,6 @@
     </div>
   </div>
 </section>
-
-<!-- 招募工作者 -->
 <section id="join" class="py-24 relative gradient-bg">
   <div class="absolute inset-0 overflow-hidden">
     <div class="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl opacity-30"></div>
@@ -885,8 +805,6 @@
     </div>
   </div>
 </section>
-
-<!-- 留言咨询 -->
 <section id="message" class="py-24 bg-white relative overflow-hidden">
   <div class="absolute inset-0 overflow-hidden">
     <div class="absolute top-0 right-0 w-80 h-80 bg-primary/5 rounded-full blur-3xl"></div>
@@ -938,8 +856,6 @@
     </div>
   </div>
 </section>
-
-<!-- 社会价值 -->
 <section id="value" class="py-24 relative gradient-bg">
   <div class="absolute inset-0 overflow-hidden">
     <div class="absolute -top-20 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl opacity-30"></div>
@@ -980,8 +896,6 @@
     </div>
   </div>
 </section>
-
-<!-- 底部 -->
 <footer class="glass-dark py-16 text-white relative overflow-hidden">
   <div class="absolute inset-0 bg-gradient-to-br from-dark/90 via-dark to-dark"></div>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -1004,28 +918,21 @@
 </footer>
 
 <script>
-  // 导航滚动效果
   const navbar = document.getElementById('navbar');
   window.addEventListener('scroll', () => {
     navbar.classList.toggle('shadow-xl', window.scrollY > 80);
   });
-
-  // 移动端菜单
   const menuBtn = document.getElementById('menuBtn');
   const mobileMenu = document.getElementById('mobileMenu');
   
   menuBtn.addEventListener('click', () => {
     mobileMenu.classList.toggle('hidden');
   });
-
-  // 点击菜单链接后关闭菜单
   document.querySelectorAll('#mobileMenu a').forEach(item => {
     item.addEventListener('click', () => {
       mobileMenu.classList.add('hidden');
     });
   });
-
-  // 滚动动画
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -1035,8 +942,6 @@
   }, { threshold: 0.1 });
   
   document.querySelectorAll('.card').forEach(el => observer.observe(el));
-
-  // 粒子效果
   function createParticles() {
     const container = document.getElementById('particles');
     if (!container) return;
@@ -1067,8 +972,6 @@
       container.appendChild(particle);
     }
   }
-
-  // 波纹效果
   document.querySelectorAll('button, a[href="#join"], a[href="#message"]').forEach(el => {
     el.addEventListener('click', function(e) {
       const x = e.clientX - e.target.getBoundingClientRect().left;
@@ -1086,8 +989,6 @@
       }, 600);
     });
   });
-
-  // 滚动进度条
   const scrollProgress = document.getElementById('scrollProgress');
   if (scrollProgress) {
     window.addEventListener('scroll', () => {
@@ -1097,8 +998,6 @@
       scrollProgress.style.width = scrolled + '%';
     });
   }
-
-  // 表单提交
   function submitForm() {
     const form = document.querySelector('#join form');
     const button = form.querySelector('button');
@@ -1166,8 +1065,6 @@
       }, 3000);
     }, 1500);
   }
-
-  // 平滑滚动
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
       e.preventDefault();
@@ -1183,8 +1080,6 @@
       }
     });
   });
-
-  // 页面加载初始化
   document.addEventListener('DOMContentLoaded', function() {
     createParticles();
     
